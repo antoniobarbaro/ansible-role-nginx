@@ -1,0 +1,26 @@
+---
+# tasks file for nginx-php
+- name: Install nginx
+  yum: 
+    state: present 
+    name: {{ item }}
+  with_items:
+    - nginx
+
+- name: service nginx
+  service:
+    name: nginx
+    state: restarted
+    enabled: yes
+
+- name: install php
+  include: 'install-php.yml'
+  when: nginx_install_php
+
+- name: disable selinux
+  selinux:
+    state: disabled
+
+
+# firewall
+# supervise

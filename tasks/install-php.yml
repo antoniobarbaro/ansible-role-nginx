@@ -1,0 +1,76 @@
+- name: Install php and fpm-php modules
+  yum: 
+    state: present 
+    name: {{ item }}
+  with_items:
+    - php 
+    - php-fpm
+    - php-common
+    - php-cli
+    - php-devel
+    - php-gd
+    - php-imap
+    - php-intl
+    - php-mysql
+    - php-process
+    - php-xml
+    - php-xmlrpc
+    - php-mbstring
+
+- name: change php-fpm user in config
+  lineinfile:
+    dest: /etc/php-fpm.d/www.conf
+    regexp: '^user = apache'
+    line: 'user = nginx'
+
+- name: change php-fpm group in config
+  lineinfile:
+    dest: /etc/php-fpm.d/www.conf
+    regexp: '^group = apache'
+    line: 'group = nginx'
+
+- name: change php-fpm memory limit
+  lineinfile:
+    dest: /etc/php-fpm.d/www.conf
+    regexp: '^.?php_admin_value\[memory_limit\]'
+    line: 'php_admin_value[memory_limit] = {{ nginx_fpm_memory_limit }}'
+
+- name: copy new nginx config with fpm
+  template:
+    src: templates/nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+
+- name: change max upload file size php
+  lineinfile:
+    dest: /etc/php.ini
+    regexp: '^upload_max_filesize'
+    line: 'upload_max_filesize = {{ nginx_upload_max_filesize }}'
+
+- name: change max post size php
+  lineinfile:
+    dest: /etc/php.ini
+    regexp: '^post_max_size'
+    line: 'post_max_size = {{ nginx_upload_max_filesize }}'
+
+- name: change php default timezone
+  lineinfile:
+    dest: /etc/php.ini
+    regexp: '^;?date\.timezone'
+    line: 'date.timezone = {{ nginx_php_timezone }}'
+
+- name: fix php session permission
+  file:
+    path: /var/lib/php/session
+    owner: nginx
+    group: nginx
+
+- name: copy info.php
+  template:
+    src: templates/info.php.j2
+    dest: /usr/share/nginx/html/info.php
+
+- name: service php-fpm enable and restart
+  service:
+    name: php-fpm
+    state: restarted
+    enabled: yes

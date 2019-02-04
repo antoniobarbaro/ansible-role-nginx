@@ -1,0 +1,4 @@
+nginx_fpm_memory_limit: '128M'
+nginx_upload_max_filesize: '8M'
+nginx_php_timezone: Europe/Rome
+nginx_install_php: false
