@@ -1,7 +1,7 @@
 - name: Install php and fpm-php modules
   yum: 
     state: present 
-    name: {{ item }}
+    name: "{{ item }}"
   with_items:
     - php 
     - php-fpm

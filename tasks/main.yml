@@ -3,19 +3,19 @@
 - name: Install nginx
   yum: 
     state: present 
-    name: {{ item }}
+    name: "{{ item }}"
   with_items:
     - nginx
+
+- name: install php
+  include: 'install-php.yml'
+  when: nginx_install_php
 
 - name: service nginx
   service:
     name: nginx
     state: restarted
-    enabled: yes
-
-- name: install php
-  include: 'install-php.yml'
-  when: nginx_install_php
+    enabled: yes  
 
 - name: disable selinux
   selinux:
