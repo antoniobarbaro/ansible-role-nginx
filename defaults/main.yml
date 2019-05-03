@@ -5,3 +5,5 @@ nginx_install_php: false
 nginx_firewall_ports:
   - "80/tcp"
   - "443/tcp"
+nginx_php_ius: true             # if set to true install php from ius repo instead of php 5.4 from base repo
+nginx_php_ius_version: '56u'    # choose which php version from: '55u';'56u';'70u';'71u';'72u'

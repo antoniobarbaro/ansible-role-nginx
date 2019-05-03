@@ -1,0 +1,46 @@
+- name: download ius rpm
+  get_url:
+    url: https://centos7.iuscommunity.org/ius-release.rpm
+    dest: /tmp/ius-release.rpm
+
+- name: Install ius package
+  yum:
+     name: /tmp/ius-release.rpm
+     state: present    
+
+- name: Enable ius archive repo
+  ini_file:
+    path: /etc/yum.repos.d/ius-archive.repo
+    section: ius-archive
+    option: enabled
+    value: 1
+
+- name: Install php and fpm-php modules
+  yum: 
+    state: present 
+    name: "{{ item }}"
+  with_items:
+    - 'php{{ nginx_php_ius_version }}'
+    - 'php{{ nginx_php_ius_version }}-fpm'
+    - 'php{{ nginx_php_ius_version }}-common'
+    - 'php{{ nginx_php_ius_version }}-cli'
+    - 'php{{ nginx_php_ius_version }}-devel'
+    - 'php{{ nginx_php_ius_version }}-gd'
+    - 'php{{ nginx_php_ius_version }}-imap'    
+    - 'php{{ nginx_php_ius_version }}-intl'
+    - 'php{{ nginx_php_ius_version }}-mysqlnd'
+    - 'php{{ nginx_php_ius_version }}-process'
+    - 'php{{ nginx_php_ius_version }}-xml'
+    - 'php{{ nginx_php_ius_version }}-xmlrpc'    
+    - 'php{{ nginx_php_ius_version }}-mbstring'
+    - 'php{{ nginx_php_ius_version }}-bcmath'
+    - 'php{{ nginx_php_ius_version }}-mcrypt'
+    - 'php{{ nginx_php_ius_version }}-opcache'
+    - 'php{{ nginx_php_ius_version }}-pdo'
+    - 'php{{ nginx_php_ius_version }}-pear'
+    - 'php{{ nginx_php_ius_version }}-pecl-jsonc'                        
+    - 'php{{ nginx_php_ius_version }}-pecl-jsonc-devel'                        
+    - 'php{{ nginx_php_ius_version }}-soap'    
+
+- name: config php
+  include_tasks: 'config-php.yml'

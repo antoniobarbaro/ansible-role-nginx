@@ -9,7 +9,11 @@
 
 - name: install php
   include_tasks: 'install-php.yml'
-  when: nginx_install_php
+  when: nginx_install_php and not nginx_php_ius
+
+- name: install php ius
+  include_tasks: 'install-php-ius.yml'
+  when: nginx_install_php and nginx_php_ius
 
 - name: service nginx
   service:
