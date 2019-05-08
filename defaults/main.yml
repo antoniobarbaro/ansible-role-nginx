@@ -10,7 +10,7 @@ nginx_php_ius_version: '56u'    # choose which php version from: '55u';'56u';'70
 
 nginx_vhost_template: "vhost.j2"
 nginx_vhost_path: '/etc/nginx/conf.d'
-nginx_vhosts:
+#nginx_vhosts:
 # site http
 #  - server_name: "domain1.com www.domain1.com"
 #  - server_name: "domain2.com www.domain2.com"    

@@ -7,7 +7,6 @@
     group: root
     mode: 0644
   with_items: "{{ nginx_vhosts }}"
-  when: nginx_vhosts is defined
 
 - name: Remove vhosts config files
   file:
