@@ -15,6 +15,9 @@
   include_tasks: 'install-php-ius.yml'
   when: nginx_install_php and nginx_php_ius
 
+- name: configure vhosts
+  include_tasks: 'configure-vhosts.yml'
+
 - name: service nginx
   service:
     name: nginx

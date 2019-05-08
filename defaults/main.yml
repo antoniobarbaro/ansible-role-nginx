@@ -7,3 +7,50 @@ nginx_firewall_ports:
   - "443/tcp"
 nginx_php_ius: false            # if set to true install php from ius repo instead of php 5.4 from base repo
 nginx_php_ius_version: '56u'    # choose which php version from: '55u';'56u';'70u';'71u';'72u'
+
+nginx_vhost_template: "vhost.j2"
+nginx_vhost_path: '/etc/nginx/conf.d'
+nginx_vhosts:
+# site http
+#  - server_name: "domain1.com www.domain1.com"
+#  - server_name: "domain2.com www.domain2.com"    
+#    root: '/usr/share/nginx/html/domain2.com'  
+#  - listen: "80"
+#    server_name: "domain3.com www.domain3.com"    
+#    return: "301 https://domain3.com$request_uri"
+#    filename: "domain3.com.80.conf"
+# site with access and error log specified
+#  - server_name: "domain4.com www.domain4.com"    
+#    root: '/usr/share/nginx/html/domain4.com'  
+#    access_log: "/var/log/nginx/access.domain4.com.log"
+#    error_log: "/var/log/nginx/error.domain4.com.log"    
+# site with php
+#  - server_name: "mytest.com www.mytest.com"    
+#    root: '/usr/share/nginx/html/mytest.com'  
+#    index: "index.php index.html index.htm"
+#    active_php: true
+# site with reverse proxy
+#  - server_name: "domain5.com www.domain5.com"    
+#    root: '/usr/share/nginx/html/domain5.com'      
+#    reverse_proxy:
+#      - { location: "/services/", proxy_pass: "http://localhost:8040/services/"}
+#      - { location: "/services2/", proxy_pass: "http://localhost:8050/services/", active_cors: true}
+#      - { location: "/services3/", proxy_pass: "http://localhost:8050/services/", active_common_headers: true}
+# site with cors
+#  - server_name: "domain6.com www.domain6.com"    
+#    root: '/usr/share/nginx/html/domain6.com'      
+#    active_cors: true      
+# site with https
+#  - listen: "443 ssl http2"
+#    server_name: "domain6.com www.domain6.com"
+#    redirect_http_to_https: true
+#    root: "/usr/share/nginx/html/domain6.com"
+#    extra_parameters: |
+#      ssl_certificate     /etc/letsencrypt/live/domain6.com/fullchain.pem; 
+#      ssl_certificate_key /etc/letsencrypt/live/domain6.com/privkey.pem; 
+# delete configuration file
+#  - server_name: "domain1.com www.domain1.com"
+#    state: "absent"
+#  - server_name: "domain2.com"
+#    filename: "domain2.80.conf"
+#    state: "absent"    
