@@ -15,6 +15,16 @@
   include_tasks: 'install-php-ius.yml'
   when: nginx_install_php and nginx_php_ius
 
+- name: configure nginx.conf
+  template:
+    src: templates/nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    force: true
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ nginx_default }}"
+
 - name: configure vhosts
   include_tasks: 'configure-vhosts.yml'
   when: nginx_vhosts is defined

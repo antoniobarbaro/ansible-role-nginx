@@ -36,36 +36,40 @@ http {
     # for more information.
     include /etc/nginx/conf.d/*.conf;
 
-    server {
-        listen       80 default_server;
-        listen       [::]:80 default_server;
-        server_name  _;
-        root         /usr/share/nginx/html;
 
-        # Load configuration files for the default server block.
-        include /etc/nginx/default.d/*.conf;
+    # dinamically set
+    {% include 'server.j2' %}
 
-        location / {
-        }
+    #server {
+    #    listen       80 default_server;
+    #    listen       [::]:80 default_server;
+    #    server_name  _;
+    #    root         /usr/share/nginx/html;
 
+    #    # Load configuration files for the default server block.
+    #    include /etc/nginx/default.d/*.conf;
 
-        # invia tutte le pagine con estensione php a 127.0.0.1 sulla porta 9000 dove è in ascolto php-fpm
-        location ~ \.php$ {
-                include fastcgi_params;
-                fastcgi_pass 127.0.0.1:9000;
-                fastcgi_index index.php;
-                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        }
+    #    location / {
+    #    }
 
 
-        error_page 404 /404.html;
-            location = /40x.html {
-        }
+    #    # invia tutte le pagine con estensione php a 127.0.0.1 sulla porta 9000 dove è in ascolto php-fpm
+    #    location ~ \.php$ {
+    #            include fastcgi_params;
+    #            fastcgi_pass 127.0.0.1:9000;
+    #            fastcgi_index index.php;
+    #            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    #    }
 
-        error_page 500 502 503 504 /50x.html;
-            location = /50x.html {
-        }
-    }
+
+    #    error_page 404 /404.html;
+    #        location = /40x.html {
+    #    }
+
+    #    error_page 500 502 503 504 /50x.html;
+    #        location = /50x.html {
+    #    }
+    #}
 
 # Settings for a TLS enabled server.
 #
@@ -98,4 +102,5 @@ http {
 #    }
 
 }
+
 

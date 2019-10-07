@@ -7,8 +7,9 @@ nginx_firewall_ports:
   - "443/tcp"
 nginx_php_ius: false            # if set to true install php from ius repo instead of php 5.4 from base repo
 nginx_php_ius_version: '56u'    # choose which php version from: '55u';'56u';'70u';'71u';'72u'
-
-nginx_vhost_template: "vhost.j2"
+nginx_default:
+  - root: '/usr/share/nginx/html'  
+nginx_vhost_template: "server.j2"
 nginx_vhost_path: '/etc/nginx/conf.d'
 #nginx_vhosts:
 # site http
@@ -19,10 +20,8 @@ nginx_vhost_path: '/etc/nginx/conf.d'
 #    server_name: "domain3.com www.domain3.com"    
 #    return: "301 https://domain3.com$request_uri"
 #    filename: "domain3.com.80.conf"
-# default site with alias
-#  - server_name: "localhost"    
-#    filename: "default.conf"
-#    root: '/data/www'      
+# site with alias
+#  - server_name: "domain2.com www.domain2.com"    
 #    location_alias:
 #      - { location: "/data/upload/EXPORT/", alias: "/data/upload/EXPORT/"}      
 #      - { location: "/data/upload/SUPPORTO/", alias: "/data/upload/SUPPORTO/"}  

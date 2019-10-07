@@ -1,4 +1,4 @@
-{% block redirect_http_to_https %}
+{# --- redirect to https --- #}
 {% if item.redirect_http_to_https is defined %}
 server {
     listen       80;
@@ -6,24 +6,23 @@ server {
     return       301 https://{{ item.server_name.split(' ')[0] }}$request_uri;
 }
 {% endif %}
-{% endblock %}
+
 
 server {
-    {% block server_begin %}{% endblock %}
 
-    {% block server_basic -%}
+{# --- listen port --- #}
     listen {{ item.listen | default('80') }};
 
-{% if item.server_name is defined %}
-    server_name {{ item.server_name }};
-{% endif %}
+{# --- server_name --- #}
+    server_name {{ item.server_name | default('_') }};
 
-{% if item.root is defined %}
-    root {{ item.root }};
-{% endif %}
+{# --- root --- #}
+    root {{ item.root | default('/usr/share/nginx/html')  }};
 
+{# --- index --- #}
     index {{ item.index | default('index.html index.htm') }};
 
+{# --- log --- #}
 {% if item.error_page is defined %}
     error_page {{ item.error_page }};
 {% endif %}
@@ -34,13 +33,12 @@ server {
     error_log {{ item.error_log }} error;
 {% endif %}
 
+{# --- return --- #}
 {% if item.return is defined %}
     return {{ item.return }};
 {% endif %}
-    {% endblock %}
 
-    {% block server_end %}{% endblock %}
-
+{# --- cors --- #}
 {% if item.active_cors is defined %}
     # Active CORS
     add_header Access-Control-Allow-Origin *;
@@ -49,21 +47,19 @@ server {
     add_header Access-Control-Allow-Credentials true;
 {% endif %}
 
+{# --- php --- #}
 {% if item.active_php is defined %}
-   
     location ~ \.php$ {
             include fastcgi_params;
             fastcgi_pass 127.0.0.1:9000;
             fastcgi_index index.php;
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
     }
-
 {% endif %}
 
-
+{# --- reverse proxy --- #}
 {% if item.reverse_proxy is defined %}
 {% for rev_proxy in item.reverse_proxy %}
-
     location {{ rev_proxy.location }} {
 {% if rev_proxy.active_cors is defined %}
         # Active CORS
@@ -86,22 +82,19 @@ server {
 {% endif %}
         proxy_pass {{ rev_proxy.proxy_pass }};
     }
-
 {% endfor %}
 {% endif %}
 
-
+{# --- location alias --- #}
 {% if item.location_alias is defined %}
 {% for loc_alias in item.location_alias %}
-
     location {{ loc_alias.location }} {
         alias {{ loc_alias.alias }};
     }
-    
 {% endfor %}
 {% endif %}
 
-
+{# --- extra parameters --- #}
 {% if item.extra_parameters is defined %}
     {{ item.extra_parameters|indent(4) }}
 {% endif %}

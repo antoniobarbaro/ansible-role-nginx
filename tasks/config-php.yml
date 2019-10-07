@@ -16,10 +16,10 @@
     regexp: '^.?php_admin_value\[memory_limit\]'
     line: 'php_admin_value[memory_limit] = {{ nginx_fpm_memory_limit }}'
 
-- name: copy new nginx config with fpm
-  template:
-    src: templates/nginx.conf.j2
-    dest: /etc/nginx/nginx.conf
+#- name: copy new nginx config with fpm
+#  template:
+#    src: templates/nginx.conf.j2
+#    dest: /etc/nginx/nginx.conf
 
 - name: change max upload file size php
   lineinfile:
