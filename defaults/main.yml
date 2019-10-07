@@ -19,6 +19,13 @@ nginx_vhost_path: '/etc/nginx/conf.d'
 #    server_name: "domain3.com www.domain3.com"    
 #    return: "301 https://domain3.com$request_uri"
 #    filename: "domain3.com.80.conf"
+# default site with alias
+#  - server_name: "localhost"    
+#    filename: "default.conf"
+#    root: '/data/www'      
+#    location_alias:
+#      - { location: "/data/upload/EXPORT/", alias: "/data/upload/EXPORT/"}      
+#      - { location: "/data/upload/SUPPORTO/", alias: "/data/upload/SUPPORTO/"}  
 # site with access and error log specified
 #  - server_name: "domain4.com www.domain4.com"    
 #    root: '/usr/share/nginx/html/domain4.com'  

@@ -91,6 +91,17 @@ server {
 {% endif %}
 
 
+{% if item.location_alias is defined %}
+{% for loc_alias in item.location_alias %}
+
+    location {{ loc_alias.location }} {
+        alias {{ loc_alias.alias }};
+    }
+    
+{% endfor %}
+{% endif %}
+
+
 {% if item.extra_parameters is defined %}
     {{ item.extra_parameters|indent(4) }}
 {% endif %}
