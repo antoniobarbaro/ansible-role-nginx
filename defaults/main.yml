@@ -18,11 +18,13 @@ nginx_php_packages:
   - php-gd
   - php-imap
   - php-intl
-  - php-mysql
+  - php-mysqlnd
   - php-process
   - php-xml
   - php-xmlrpc
   - php-mbstring
+  - php-pecl-apcu
+  - php-ldap
 nginx_default:
   - root: '/usr/share/nginx/html'  
 nginx_vhost_template: "server.j2"
