@@ -1,19 +1,26 @@
 ---
+- name: Install epel
+  yum:
+     name: epel-release
+     state: present   
+
 # tasks file for nginx-php
 - name: Install nginx
   yum: 
     state: present 
-    name: "{{ item }}"
-  with_items:
-    - nginx
+    name: nginx
 
 - name: install php
   include_tasks: 'install-php.yml'
-  when: nginx_install_php and not nginx_php_ius
+  when: nginx_install_php and not nginx_php_ius and not nginx_php_remi
 
 - name: install php ius
   include_tasks: 'install-php-ius.yml'
-  when: nginx_install_php and nginx_php_ius
+  when: nginx_install_php and nginx_php_ius and not nginx_php_remi
+
+- name: install php remi
+  include_tasks: 'install-php-remi.yml'
+  when: nginx_install_php and nginx_php_remi and not nginx_php_ius
 
 - name: configure nginx.conf
   template:

@@ -1,21 +1,7 @@
 - name: Install php and fpm-php modules
   yum: 
     state: present 
-    name: "{{ item }}"
-  with_items:
-    - php 
-    - php-fpm
-    - php-common
-    - php-cli
-    - php-devel
-    - php-gd
-    - php-imap
-    - php-intl
-    - php-mysql
-    - php-process
-    - php-xml
-    - php-xmlrpc
-    - php-mbstring
+    name: "{{ nginx_php_packages }}"
 
 - name: config php
   include_tasks: 'config-php.yml'
