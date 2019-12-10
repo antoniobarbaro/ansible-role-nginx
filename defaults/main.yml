@@ -26,7 +26,9 @@ nginx_php_packages:
   - php-pecl-apcu
   - php-ldap
 nginx_default:
-  - root: '/usr/share/nginx/html'  
+  - root: '/usr/share/nginx/html'
+    active_php: "{{ nginx_install_php }}"
+    active_cors: true          
 nginx_vhost_template: "server.j2"
 nginx_vhost_path: '/etc/nginx/conf.d'
 #nginx_vhosts:
