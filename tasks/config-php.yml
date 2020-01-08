@@ -27,6 +27,12 @@
     regexp: '^upload_max_filesize'
     line: 'upload_max_filesize = {{ nginx_upload_max_filesize }}'
 
+- name: change php memory limit
+  lineinfile:
+    dest: /etc/php.ini
+    regexp: '^memory_limit'
+    line: 'memory_limit = {{ nginx_php_memory_limit }}'
+
 - name: change max post size php
   lineinfile:
     dest: /etc/php.ini

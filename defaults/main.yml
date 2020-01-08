@@ -1,4 +1,5 @@
 nginx_fpm_memory_limit: '128M'
+nginx_php_memory_limit: '512M'
 nginx_upload_max_filesize: '8M'
 nginx_php_timezone: Europe/Rome
 nginx_install_php: false
@@ -25,6 +26,11 @@ nginx_php_packages:
   - php-mbstring
   - php-pecl-apcu
   - php-ldap
+  - php-opcache
+  - php-mcrypt
+  - php-pecl-redis
+  - php-pecl-imagick
+  - php-pecl-zip
 nginx_default:
   - root: '/usr/share/nginx/html'
     active_php: "{{ nginx_install_php }}"
