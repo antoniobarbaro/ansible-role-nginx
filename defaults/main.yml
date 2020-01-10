@@ -31,6 +31,10 @@ nginx_php_packages:
   - php-pecl-redis
   - php-pecl-imagick
   - php-pecl-zip
+  - php-smbclient
+  - php-imap
+  - php-gmp
+
 nginx_default:
   - root: '/usr/share/nginx/html'
     active_php: "{{ nginx_install_php }}"
