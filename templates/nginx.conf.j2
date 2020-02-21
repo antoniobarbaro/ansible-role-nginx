@@ -31,14 +31,15 @@ http {
     include             /etc/nginx/mime.types;
     default_type        application/octet-stream;
 
+    # dinamically set
+    {% include 'server.j2' %}
+
+
     # Load modular configuration files from the /etc/nginx/conf.d directory.
     # See http://nginx.org/en/docs/ngx_core_module.html#include
     # for more information.
     include /etc/nginx/conf.d/*.conf;
 
-
-    # dinamically set
-    {% include 'server.j2' %}
 
 }
 
