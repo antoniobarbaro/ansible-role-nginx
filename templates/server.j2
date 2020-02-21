@@ -20,7 +20,7 @@ server {
     root {{ item.root | default('/usr/share/nginx/html')  }};
 
 {# --- index --- #}
-    index {{ item.index | default('index.html index.htm') }};
+    index {{ item.index | default('index.html index.htm index.php') }};
 
 {# --- log --- #}
 {% if item.error_page is defined %}
