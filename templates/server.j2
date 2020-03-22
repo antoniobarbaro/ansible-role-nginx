@@ -94,6 +94,15 @@ server {
 {% endfor %}
 {% endif %}
 
+{# --- location try_files --- #}
+{% if item.location_try_files is defined %}
+{% for loc_try_files in item.location_try_files %}
+    location {{ loc_try_files.location }} {
+        try_files {{ loc_try_files.try_files }};
+    }
+{% endfor %}
+{% endif %}
+
 {# --- extra parameters --- #}
 {% if item.extra_parameters is defined %}
     {{ item.extra_parameters|indent(4) }}

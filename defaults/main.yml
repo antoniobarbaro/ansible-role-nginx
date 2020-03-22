@@ -35,10 +35,20 @@ nginx_php_packages:
   - php-imap
   - php-gmp
 
+## Default server configuration (nginx.conf) ---  
 nginx_default:
   - root: '/usr/share/nginx/html'
     active_php: "{{ nginx_install_php }}"
-    active_cors: true          
+    active_cors: true   
+# wordpress example installed in http://www.mysite.com/wordpress   
+#  - root: '/usr/share/nginx/html'
+#    active_php: "{{ nginx_install_php }}"
+#    active_cors: true   
+#    location_try_files:
+#      - { location: "/wordpress/", try_files: "$uri $uri/ /wordpress/index.php?q=$uri$args"}      
+
+
+## Virtual hosts configuration ---    
 nginx_vhost_template: "server.j2"
 nginx_vhost_path: '/etc/nginx/conf.d'
 #nginx_vhosts:
@@ -84,6 +94,17 @@ nginx_vhost_path: '/etc/nginx/conf.d'
 #    extra_parameters: |
 #      ssl_certificate     /etc/letsencrypt/live/domain6.com/fullchain.pem; 
 #      ssl_certificate_key /etc/letsencrypt/live/domain6.com/privkey.pem; 
+# site wordpress
+#  - listen: "443 ssl http2"
+#    server_name: "www.mysite.com"
+#    redirect_http_to_https: true
+#    root: "/usr/share/nginx/sites/www.mysite.com"
+#    active_php: true
+#    location_try_files:
+#      - { location: "/", try_files: "$uri $uri/ /index.php?$args"}      
+#    extra_parameters: |
+#      ssl_certificate     /etc/letsencrypt/live/www.mysite.com/fullchain.pem; 
+#      ssl_certificate_key /etc/letsencrypt/live/www.mysite.com/privkey.pem;           
 # delete configuration file
 #  - server_name: "domain1.com www.domain1.com"
 #    state: "absent"
