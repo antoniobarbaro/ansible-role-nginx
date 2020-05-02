@@ -1,5 +1,5 @@
 - name: Install php and fpm-php modules
-  yum: 
+  package: 
     state: present 
     name: "{{ nginx_php_packages }}"
 

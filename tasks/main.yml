@@ -3,10 +3,30 @@
   yum:
      name: epel-release
      state: present   
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+# set distribution variables
+- name: set centos variables
+  set_fact:
+    nginx_user: "nginx"
+    nginx_user_group: "nginx"
+    nginx_phpfpm_conf_path: "/etc/php-fpm.d/www.conf"
+    nginx_phpfpm_service_name: "php-fpm"
+    nginx_php_ini_path: "/etc/php.ini"
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: set debian 10 variables
+  set_fact:
+    nginx_user: "www-data"
+    nginx_user_group: "www-data"
+    nginx_phpfpm_conf_path: "/etc/php/7.3/fpm/pool.d/www.conf"
+    nginx_phpfpm_service_name: "php7.3-fpm"
+    nginx_php_ini_path: "/etc/php/7.3/fpm/php.ini"
+  when: ansible_distribution == 'Debian'
 
 # tasks file for nginx-php
 - name: Install nginx
-  yum: 
+  package: 
     state: present 
     name: nginx
 
@@ -42,26 +62,5 @@
     state: restarted
     enabled: yes  
 
-- name: disable selinux
-  selinux:
-    state: disabled
-
-- name: Install firewalld
-  yum: 
-    state: present 
-    name: firewalld
-
-- name: Enable and start firewalld
-  service: 
-    name: firewalld 
-    state: started 
-    enabled: yes
-
-- name: enable firewall ports
-  firewalld:
-    port: "{{ item }}"
-    permanent: true
-    state: enabled  
-  notify: restarted firewalld   
-  with_items: 
-    "{{ nginx_firewall_ports }}"
+- include: 'security-redhat.yml'
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'

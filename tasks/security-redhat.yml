@@ -1,0 +1,23 @@
+- name: disable selinux
+  selinux:
+    state: disabled
+
+- name: Install firewalld
+  yum: 
+    state: present 
+    name: firewalld
+
+- name: Enable and start firewalld
+  service: 
+    name: firewalld 
+    state: started 
+    enabled: yes
+
+- name: enable firewall ports
+  firewalld:
+    port: "{{ item }}"
+    permanent: true
+    state: enabled  
+  notify: restarted firewalld   
+  with_items: 
+    "{{ nginx_firewall_ports }}"

@@ -6,34 +6,43 @@ nginx_install_php: false
 nginx_firewall_ports:
   - "80/tcp"
   - "443/tcp"
-nginx_php_ius: false            # if set to true install php from ius repo instead of php 5.4 from base repo
-nginx_php_ius_version: '56u'    # choose which php version from: '55u';'56u';'70u';'71u';'72u';'73'
-nginx_php_remi: false            # if set to true install php from ius repo instead of php 5.4 from base repo
-nginx_php_remi_version: '73'    # choose which php version from: '55u';'56u';'70u';'71u';'72u';'73'
+nginx_php_ius: false            # ONLY CENTOS if set to true install php from ius repo instead of php 5.4 from base repo 
+nginx_php_ius_version: '56u'    # ONLY CENTOS choose which php version from: '55u';'56u';'70u';'71u';'72u';'73' ONLY CENTOS
+nginx_php_remi: false           # ONLY CENTOS SUGGESTED if set to true install php from ius repo instead of php 5.4 from base repo 
+nginx_php_remi_version: '73'    # ONLY CENTOS SUGGESTED choose which php version from: '55u';'56u';'70u';'71u';'72u';'73' 
 nginx_php_packages:
   - php 
   - php-fpm
   - php-common
   - php-cli
-  - php-devel
   - php-gd
   - php-imap
   - php-intl
   - php-mysqlnd
-  - php-process
   - php-xml
   - php-xmlrpc
   - php-mbstring
-  - php-pecl-apcu
   - php-ldap
   - php-opcache
-  - php-mcrypt
-  - php-pecl-redis
-  - php-pecl-imagick
-  - php-pecl-zip
   - php-smbclient
   - php-imap
   - php-gmp
+
+# centos additional packages
+#  - php-devel
+#  - php-process
+#  - php-pecl-apcu
+#  - php-mcrypt
+#  - php-pecl-redis
+#  - php-pecl-imagick
+#  - php-pecl-zip
+
+# debian additional packages
+#  - php-dev       
+#  - php-apcu      
+#  - php-redis     
+#  - php-imagick   
+#  - php-zip       
 
 ## Default server configuration (nginx.conf) ---  
 nginx_default:
